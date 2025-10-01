@@ -1,7 +1,7 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Student from './components/Student';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Student from "./components/Student";
 
 function App() {
   return (
@@ -11,7 +11,6 @@ function App() {
           <Route path="/" element={<Student />} />
         </Routes>
       </BrowserRouter>
-     
     </div>
   );
 }
