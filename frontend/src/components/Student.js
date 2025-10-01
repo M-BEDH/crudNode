@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Link  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Student() {
   // État pour stocker la liste des étudiants
@@ -25,7 +25,7 @@ function Student() {
   const handleDelete = async (id) => {
     try {
       // Requête DELETE pour supprimer l'étudiant avec l'ID spécifié
-      await axios.delete(`http://localhost:8081/student/` + id);
+      await axios.delete(`http://localhost:8081/student/${id}`);
       // Nouvelle requête GET pour récupérer la liste mise à jour
       const response = await axios.get("http://localhost:8081");
       setStudent(response.data); // Mise à jour de l'état avec la nouvelle liste

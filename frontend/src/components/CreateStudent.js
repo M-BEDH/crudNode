@@ -8,11 +8,11 @@ function CreateStudent() {
   // États pour gérer les données du formulaire
   const [name, setName] = useState(""); // État pour le nom de l'étudiant
   const [email, setEmail] = useState(""); // État pour l'email de l'étudiant
-  
+
   // Hooks pour la navigation et récupération des paramètres d'URL
   const { id } = useParams(); // Récupère l'ID depuis l'URL (si présent)
   const navigate = useNavigate(); // Hook pour la navigation programmatique
-  
+
   // Variable booléenne pour déterminer le mode (création ou modification)
   const isUpdate = !!id; // Conversion de l'ID en booléen (true si ID présent)
 
@@ -39,9 +39,21 @@ function CreateStudent() {
   function handleSubmit(event) {
     // Empêche le comportement par défaut du formulaire (rechargement de page)
     event.preventDefault();
-    
+
     // Condition pour déterminer l'action à effectuer
-    if (isUpdate) {
+    if (!isUpdate) {
+      // Branche CRÉATION : ajout d'un nouvel étudiant
+      axios
+        .post("http://localhost:8081/create", { name, email }) // Requête POST pour créer
+        .then((res) => {
+          console.log("Étudiant créé:", res);
+          navigate("/"); // Redirection vers la page principale après succès
+        })
+        .catch((error) => {
+          // Gestion des erreurs lors de la création
+          console.error("Erreur lors de la création:", error);
+        });
+    } else {
       // Branche MODIFICATION : mise à jour d'un étudiant existant
       const updateStudent = { name, email }; // Objet avec les nouvelles données
       axios
@@ -54,21 +66,8 @@ function CreateStudent() {
           // Gestion des erreurs lors de la modification
           console.error("Erreur lors de la modification:", error);
         });
-    } else {
-      // Branche CRÉATION : ajout d'un nouvel étudiant
-      axios
-        .post("http://localhost:8081/create", { name, email }) // Requête POST pour créer
-        .then((res) => {
-          console.log("Étudiant créé:", res);
-          navigate("/"); // Redirection vers la page principale après succès
-        })
-        .catch((error) => {
-          // Gestion des erreurs lors de la création
-          console.error("Erreur lors de la création:", error);
-        });
     }
   }
-
 
   return (
     <div className="d-flex bg-primary justify-content-center align-items-center vh-100">
