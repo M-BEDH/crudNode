@@ -27,8 +27,7 @@ function Student() {
       // Requête DELETE pour supprimer l'étudiant avec l'ID spécifié
       await axios.delete(`http://localhost:8081/student/${id}`);
       // Nouvelle requête GET pour récupérer la liste mise à jour
-      const response = await axios.get("http://localhost:8081");
-      setStudent(response.data); // Mise à jour de l'état avec la nouvelle liste
+      window.location.reload();
     } catch (error) {
       // Gestion des erreurs lors de la suppression
       console.error(error);
