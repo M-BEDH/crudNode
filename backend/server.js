@@ -60,10 +60,6 @@ database.connect((err) => {
   console.log('Connecté à la base de données MySQL');
 });
 
-// Note: Middleware redondants supprimés (déjà définis plus haut)
-// app.use(cors(corsOptions));
-// app.use(express.json());
-
 // ===============================================
 // ROUTES API - OPÉRATIONS CRUD
 // ===============================================
