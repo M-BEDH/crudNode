@@ -1,31 +1,51 @@
 // Importation des bibliothèques et hooks nécessaires
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-function CreateStudent() {
+function UpdateStudent() {
   // États pour gérer les données du formulaire
   const [name, setName] = useState(""); // État pour le nom de l'étudiant
   const [email, setEmail] = useState(""); // État pour l'email de l'étudiant
 
-  // Hook pour la navigation programmatique
-  const navigate = useNavigate();
+  // Hooks pour la navigation et récupération des paramètres d'URL
+  const { id } = useParams(); // Récupère l'ID depuis l'URL
+  const navigate = useNavigate(); // Hook pour la navigation programmatique
+
+  // Hook useEffect pour charger les données existantes de l'étudiant
+  useEffect(() => {
+    // Requête GET pour récupérer les données de l'étudiant à modifier
+    axios
+      .get(`http://localhost:8081/student/${id}`)
+      .then((res) => {
+        // Pré-remplissage des champs avec les données existantes
+        setName(res.data.name);
+        setEmail(res.data.email);
+      })
+      .catch((error) => {
+        // Gestion des erreurs lors du chargement des données
+        console.error("Erreur lors du chargement de l'étudiant:", error);
+        // Redirection en cas d'erreur (étudiant non trouvé, etc.)
+        navigate("/");
+      });
+  }, [id, navigate]); // Dépendances : re-exécute si l'ID change
 
   // Fonction pour gérer la soumission du formulaire
   function handleSubmit(event) {
     // Empêche le comportement par défaut du formulaire (rechargement de page)
     event.preventDefault();
 
-    // Création d'un nouvel étudiant
+    // Modification de l'étudiant existant
+    const updateStudent = { name, email }; // Objet avec les nouvelles données
     axios
-      .post("http://localhost:8081/create", { name, email }) // Requête POST pour créer
+      .put(`http://localhost:8081/update/${id}`, updateStudent) // Requête PUT pour modifier
       .then((res) => {
-        console.log("Étudiant créé:", res);
+        console.log("Étudiant modifié:", res);
         navigate("/"); // Redirection vers la page principale après succès
       })
       .catch((error) => {
-        // Gestion des erreurs lors de la création
-        console.error("Erreur lors de la création:", error);
+        // Gestion des erreurs lors de la modification
+        console.error("Erreur lors de la modification:", error);
       });
   }
 
@@ -33,7 +53,7 @@ function CreateStudent() {
     <div className="d-flex bg-primary justify-content-center align-items-center vh-100">
       <div className="bg-white p-3 rounded w-50 ">
         <form onSubmit={handleSubmit}>
-          <h2>Créer un étudiant</h2>
+          <h2>Modifier un étudiant</h2>
           <div className="mb-2">
             <label htmlFor="name">Nom</label>
             <input
@@ -56,7 +76,7 @@ function CreateStudent() {
             />
           </div>
           <button className="btn btn-success w-10">
-            Enregistrer
+            Modifier
           </button>
         </form>
       </div>
@@ -64,4 +84,4 @@ function CreateStudent() {
   );
 }
 
-export default CreateStudent;
+export default UpdateStudent;
