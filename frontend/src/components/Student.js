@@ -1,7 +1,6 @@
 // Importation des hooks et bibliothèques nécessaires
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Student() {
@@ -50,8 +49,8 @@ function Student() {
             </tr>
           </thead>
           <tbody>
-            {student.map((data, i) => (
-              <tr key={i}>
+            {student.map((data, index) => (
+              <tr key={index}>
                 <td>{data.name}</td>
                 <td>{data.email}</td>
                 <td>
