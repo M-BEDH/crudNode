@@ -49,8 +49,8 @@ function Student() {
             </tr>
           </thead>
           <tbody>
-            {student.map((data, index) => (
-              <tr key={index}>
+            {student.map((data) => (
+              <tr key={data.index}>
                 <td>{data.name}</td>
                 <td>{data.email}</td>
                 <td>
