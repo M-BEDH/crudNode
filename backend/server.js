@@ -19,7 +19,6 @@ const mysql = require("mysql2"); // Driver MySQL pour Node.js
 const corsOptions = {
   origin: [
     "http://localhost:3000", // React en développement
-    "http://localhost:3001", // Port alternatif React
     "http://localhost:8081", // Port du serveur backend
   ],
   optionSuccessStatus: 200, // Code de statut pour les requêtes OPTIONS réussies
