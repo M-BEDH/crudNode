@@ -129,7 +129,7 @@ app.post("/create", (req, res) => {
 // ROUTE PUT "/update/:id" - Modifier un étudiant existant
 // -----------------------------------------------
 app.put("/update/:id", (req, res) => {
-  // Requête SQL de mise à jour avec placeholders
+  // Requête SQL de mise à jour avec placeholders   // S'appelle un Requete préparée 
   const sql = "UPDATE students SET `name` = ?, `email` = ? WHERE id = ?";
   // Extraction des nouvelles valeurs depuis le corps de la requête
   const values = [
